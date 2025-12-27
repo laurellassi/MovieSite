@@ -1,0 +1,23 @@
+# Python cache and compiled files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.sqlite3    # If using SQLite locally
+
+# Ignore local environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
