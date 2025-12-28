@@ -3,4 +3,4 @@ from .models import Movie
 
 def movie_list(request):
     movies = Movie.objects.all()
-    return render(request, 'home/movie_list.html', {'movies': movies})
+    return render(request, 'movies/movie_list.html', {'movies': movies})

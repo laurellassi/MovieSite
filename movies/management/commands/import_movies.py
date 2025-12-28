@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from decouple import config
 from django.core.management.base import BaseCommand
 from django.conf import settings
-from home.models import Movie, Genre
+from movies.models import Movie, Genre
 
 MEDIA_DIR = os.path.join(settings.MEDIA_ROOT, "movie_posters")
 TMDB_KEY = config('TMDB_API_KEY')
