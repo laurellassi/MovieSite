@@ -13,8 +13,8 @@ class Movie(models.Model):
     movie_id = models.IntegerField(primary_key = True)
     title = models.CharField(max_length = 255) 
     genres = models.ManyToManyField(Genre) 
-    image_url = models.URLField(blank = True, null = True)
-
+    poster = models.ImageField(upload_to='movie_posters/', blank=True, null=True)
+    
     def __str__(self):
         return self.title
 
