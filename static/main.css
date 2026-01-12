@@ -272,6 +272,62 @@ img {
     border-bottom-color: var(--color-accent-hover);
 }
 
+.search-results-section {
+    margin: var(--spacing-xl) 0;
+    padding: 0 var(--spacing-xl);
+}
+
+.search-results-section h2 {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-md);
+    color: var(--color-text);
+    font-family: var(--font-family-display);
+}
+
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.search-result-item {
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.search-result-item:hover {
+    transform: scale(1.05);
+}
+
+.search-result-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.no-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: var(--color-search-bg);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-placeholder);
+    font-size: var(--font-xs);
+}
+
+.movie-title {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-xs);
+    text-align: center;
+    color: var(--color-text);
+    font-family: var(--font-family-primary);
+}
+
 /* Scroll-down indicator */
 .explore-indicator {
     position: absolute;
@@ -532,6 +588,15 @@ img {
 
     .carousel-btn {
         display: none;
+    }
+
+    .search-results-section {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .search-results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--spacing-md);
     }
 }
 

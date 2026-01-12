@@ -49,8 +49,6 @@ class Movie(models.Model):
     poster = models.ImageField(upload_to='movie_posters/', blank=True, null=True)
     directors = ArrayField(models.CharField(max_length=255), blank=True, default=list)
     actors = ArrayField(models.CharField(max_length=255), blank=True, default=list)
-
-    # Many-to-Many:
     genres = ArrayField(models.CharField(max_length=100), blank=True, default=list)
     tags = ArrayField(models.CharField(max_length=100), blank=True, default=list)
 

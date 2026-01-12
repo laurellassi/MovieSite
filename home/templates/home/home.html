@@ -17,7 +17,7 @@
                     alt="MovieSite Logo"
                 />
             </div>
-            
+
             <!-- Desktop navigation links -->
             <nav id="navLinks">
                 <a href="/">Home</a>
@@ -25,7 +25,7 @@
                 <a href="#">My List</a>
                 <a href="#">Search</a>
             </nav>
-            
+
             <!-- Mobile hamburger button -->
             <button
                 id="hamburger"
@@ -39,7 +39,7 @@
                 <span></span>
             </button>
         </header>
-        
+
         <!-- Mobile dropdown menu -->
         <div class="dropdown-menu" id="dropdownMenu">
             <a href="/">Home</a>
@@ -47,7 +47,7 @@
             <a href="#">My List</a>
             <a href="#">Search</a>
         </div>
-        
+
         <!-- MAIN CONTENT -->
         <div class="container">
             <!-- Hero section with search -->
@@ -56,20 +56,53 @@
                     <h1>
                         Tell us what you love<span class="accent-mark">!</span>
                     </h1>
-                    <input
-                        type="text"
-                        placeholder="Search movies, actors, genres..."
-                        class="search-box"
-                    />
+
+                    <!-- Search bar -->
+                    <form method="GET" action="{% url 'home' %}">
+                        <input
+                            type="text"
+                            name="q"
+                            placeholder="Search movies, actors, genres..."
+                            class="search-box"
+                        />
+                        <button type="submit">Search</button>
+                    </form>
                 </div>
-                
+
                 <!-- Scroll indicator button -->
                 <div class="explore-indicator" id="exploreBtn">
                     <span>Explore</span>
                     <div class="explore-arrow"></div>
                 </div>
             </section>
-            
+
+            <!-- Search results section -->
+            {% if query %}
+            <section class="search-results-section">
+                <h2>Search results for "{{ query }}"</h2>
+
+                {% if search_results %}
+                <div class="search-results-grid">
+                    {% for movie in search_results %}
+                    <div class="search-result-item">
+                        {% if movie.poster %}
+                        <img
+                            src="/media/{{ movie.poster }}"
+                            alt="{{ movie.title }}"
+                        />
+                        {% else %}
+                        <div class="no-poster">No Image</div>
+                        {% endif %}
+                        <p class="movie-title">{{ movie.title }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No results found.</p>
+                {% endif %}
+            </section>
+            {% endif %}
+
             <!-- Movie carousels section -->
             <section class="movies-section">
                 <!-- Loop through each movie category -->
@@ -80,7 +113,7 @@
                         <h2>{{ section.title }}</h2>
                         <a href="#" class="see-more-link">SEE MORE</a>
                     </div>
-                    
+
                     <!-- Carousel container -->
                     <div class="carousel-container">
                         <!-- Left navigation button -->
@@ -90,7 +123,7 @@
                         >
                             ‹
                         </button>
-                        
+
                         <!-- Carousel viewport (visible area) -->
                         <div class="carousel-viewport">
                             <!-- Carousel track (scrollable content) -->
@@ -112,7 +145,7 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        
+
                         <!-- Right navigation button -->
                         <button
                             class="carousel-btn right"
@@ -125,7 +158,7 @@
                 {% endfor %}
             </section>
         </div>
-        
+
         <!-- JavaScript file -->
         <script src="{% static 'main.js' %}"></script>
     </body>
