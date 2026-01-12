@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from movies.models import Movie 
-from django.db.models import Avg, Count, Max
+from django.db.models import Avg, Count, Max, Q
 import random
+from django.contrib.postgres.search import SearchQuery, SearchRank, TrigramSimilarity
+from movies.search_movies import search_movies
 
 def home(request):
     # Get 13 action movies
@@ -32,3 +34,13 @@ def home(request):
     }
     
     return render(request, 'home/home.html', context)
+
+def search_view(request):
+    # Get search query from URL parameter 'q'
+    query = request.GET.get("q", "")
+    
+    # Perform the search using the search_movies function
+    results = search_movies(query)
+    
+    # Render the search results template
+    return render(request, "search.html", {"results": results})
