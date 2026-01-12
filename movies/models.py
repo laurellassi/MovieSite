@@ -4,8 +4,10 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.search import SearchVector, SearchVectorField
 from django.contrib.postgres.fields import ArrayField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Default user for when a user is deleted
 def custom_user():
@@ -70,6 +72,24 @@ class Movie(models.Model):
         
     def __str__(self):
         return self.title
+
+# Signal that automatically runs whenever a Movie is saved
+@receiver(post_save, sender=Movie)
+def update_movie_search(sender, instance, **kwargs):
+    # Update the search_vector field for full-text search
+    Movie.objects.filter(pk=instance.pk).update(
+        search_vector=
+            # Weight A = highest importance (title, directors)
+            SearchVector("title", weight="A") +
+            # Weight B = medium importance (overview, description, cast)
+            SearchVector("overview", weight="B") +
+            SearchVector("description", weight="B") +
+            SearchVector("directors", weight="A") +
+            SearchVector("actors", weight="B") +
+            # Weight C = lower importance (genres, tags)
+            SearchVector("genres", weight="C") +
+            SearchVector("tags", weight="C")
+    )
 
 class Rating(models.Model):
     # User ratings for movies

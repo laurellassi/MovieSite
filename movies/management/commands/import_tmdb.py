@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from decouple import config
 from django.core.management.base import BaseCommand
 from movies.models import Movie
+from django.contrib.postgres.search import SearchVector
 
 MAX_WORKERS = 4
 TMDB_KEY = config("TMDB_API_KEY")
@@ -67,6 +68,18 @@ class Command(BaseCommand):
                 movie.directors = directors
                 movie.actors = actors
                 movie.save()
+
+                # Update search vector
+                Movie.objects.filter(pk=movie.pk).update(
+                    search_vector=
+                        SearchVector("title", weight="A") +
+                        SearchVector("overview", weight="B") +
+                        SearchVector("description", weight="B") +
+                        SearchVector("directors", weight="A") +
+                        SearchVector("actors", weight="B") +
+                        SearchVector("genres", weight="C") +
+                        SearchVector("tags", weight="C")
+                )
                 
                 return "updated"
                 
